@@ -1,0 +1,134 @@
+package textadventure;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author Jernsax
+ */
+public class AdventureFrame extends JFrame implements ActionListener {
+
+    JTextArea maintext = new JTextArea(25, 1);
+    JTable inventory;
+    JScrollPane inventoryModel = new JScrollPane(inventory);
+    JTextField input;
+
+    JButton ok;
+    JButton west;
+    JButton east;
+    JButton north;
+    JButton south;
+    JButton showMap;
+    JLabel blank;
+
+    JMenuBar toolBar = new JMenuBar();
+
+    JMenu file = new JMenu("File");
+
+    JMenuItem newGame = new JMenuItem("Start new game");
+    JMenuItem loadGame = new JMenuItem("Load game");
+    JMenuItem saveGame = new JMenuItem("Save game");
+
+    {
+        file.add(newGame);
+        file.add(loadGame);
+        file.add(saveGame);
+        toolBar.add(file);
+    }
+
+    public AdventureFrame() {
+        setTitle("Text adventure");
+        setSize(1000, 1000);
+//        setResizable(false);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        this.setJMenuBar(toolBar);
+
+        updateInventory();
+
+
+        ok = new JButton("OK");
+        west = new JButton("West");
+        east = new JButton("East");
+        north = new JButton("North");
+        south = new JButton("South");
+        showMap = new JButton("Map");
+        input = new JTextField(20);
+        blank = new JLabel();
+
+        ok.addActionListener(this);
+        west.addActionListener(this);
+        east.addActionListener(this);
+        north.addActionListener(this);
+        south.addActionListener(this);
+        showMap.addActionListener(this);
+
+        maintext.setEditable(false);
+        
+              
+        JPanel p = new JPanel();
+        p.setLayout(new BorderLayout());
+        
+
+        p.add(maintext, BorderLayout.NORTH);
+        
+        JPanel bottom = new JPanel();
+        p.add(bottom, BorderLayout.SOUTH);
+        bottom.setLayout(new GridLayout(1,2));
+        
+        JPanel bottomLeft = new JPanel();
+        bottom.add(bottomLeft);
+        bottomLeft.add(new JScrollPane(inventory));
+        
+        JPanel bottomRight = new JPanel();
+        bottom.add(bottomRight);
+        
+        bottomRight.setLayout(new GridLayout(2,1));
+        
+        
+     
+        JPanel bottomRightTop = new JPanel();
+        bottomRightTop.add(input);
+        bottomRightTop.add(ok);
+        bottomRight.add(bottomRightTop);
+        
+        
+        
+        JPanel bottomRightBottom = new JPanel();
+        bottomRightBottom.setLayout(new BorderLayout());
+        bottomRight.add(bottomRightBottom);
+        
+        
+        bottomRightBottom.add(showMap, BorderLayout.CENTER);
+        bottomRightBottom.add(west, BorderLayout.WEST);
+        bottomRightBottom.add(east, BorderLayout.EAST);
+        bottomRightBottom.add(north, BorderLayout.NORTH);
+        bottomRightBottom.add(south, BorderLayout.SOUTH);
+        //bottomRight.add(showMap);
+
+        maintext.setText("h");
+
+        this.add(p);
+
+        setVisible(true);
+
+    }
+
+    public void updateInventory() {
+        DefaultTableModel inventoryModel = new DefaultTableModel();
+        inventory = new JTable(inventoryModel);
+
+        inventoryModel.setColumnIdentifiers(new String[]{"Items"});
+        inventoryModel.setRowCount(5);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+
+    }
+
+}
