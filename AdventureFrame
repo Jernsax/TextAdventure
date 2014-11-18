@@ -22,7 +22,7 @@ public class AdventureFrame extends JFrame implements ActionListener {
     JButton east;
     JButton north;
     JButton south;
-    JButton showMap;
+    //JButton showMap;
     JLabel blank;
 
     JMenuBar toolBar = new JMenuBar();
@@ -56,7 +56,7 @@ public class AdventureFrame extends JFrame implements ActionListener {
         east = new JButton("East");
         north = new JButton("North");
         south = new JButton("South");
-        showMap = new JButton("Map");
+        //showMap = new JButton("Map");
         input = new JTextField(20);
         blank = new JLabel();
 
@@ -65,52 +65,57 @@ public class AdventureFrame extends JFrame implements ActionListener {
         east.addActionListener(this);
         north.addActionListener(this);
         south.addActionListener(this);
-        showMap.addActionListener(this);
+        //showMap.addActionListener(this);
 
         maintext.setEditable(false);
         
-              
+        
         JPanel p = new JPanel();
-        p.setLayout(new BorderLayout());
+        p.setLayout(null);
+        
+        JPanel f = new JPanel();
+        JPanel m = new JPanel();
+        
+//SetBounds
+        
+        
+        f.setBounds(10, 420, 300, 130);
+        m.setBounds(10, 560, 500, 350);
+        ok.setBounds(855, 600, 60, 30);
+        input.setBounds(655, 600, 200, 31);
+        maintext.setBounds(10,10,960,400);
+        
+        
+        //Compass
+        //showMap.setBounds(750, 750, 70, 70);
+        north.setBounds(750, 680, 70 ,70);
+        south.setBounds(750, 820, 70, 70);
+        west.setBounds(680, 750, 70, 70);
+        east.setBounds(820, 750, 70, 70);
+        
+        
+        
+        
+        f.add(new JScrollPane(inventory)); 
+        
+        p.add(f);
+        p.add(m);
         
 
-        p.add(maintext, BorderLayout.NORTH);
-        
-        JPanel bottom = new JPanel();
-        p.add(bottom, BorderLayout.SOUTH);
-        bottom.setLayout(new GridLayout(1,2));
-        
-        JPanel bottomLeft = new JPanel();
-        bottom.add(bottomLeft);
-        bottomLeft.add(new JScrollPane(inventory));
-        
-        JPanel bottomRight = new JPanel();
-        bottom.add(bottomRight);
-        
-        bottomRight.setLayout(new GridLayout(2,1));
-        
-        
-     
-        JPanel bottomRightTop = new JPanel();
-        bottomRightTop.add(input);
-        bottomRightTop.add(ok);
-        bottomRight.add(bottomRightTop);
-        
-        
-        
-        JPanel bottomRightBottom = new JPanel();
-        bottomRightBottom.setLayout(new BorderLayout());
-        bottomRight.add(bottomRightBottom);
-        
-        
-        bottomRightBottom.add(showMap, BorderLayout.CENTER);
-        bottomRightBottom.add(west, BorderLayout.WEST);
-        bottomRightBottom.add(east, BorderLayout.EAST);
-        bottomRightBottom.add(north, BorderLayout.NORTH);
-        bottomRightBottom.add(south, BorderLayout.SOUTH);
-        //bottomRight.add(showMap);
+        p.add(maintext);
+        p.add(input);
+        p.add(ok);
+       
+        //Compass
+        //p.add(showMap);
+        p.add(west);
+        p.add(east);
+        p.add(north);
+        p.add(south);
+        //p.add(showMap);
 
         maintext.setText("h");
+        m.setBackground(Color.BLUE);
 
         this.add(p);
 
