@@ -21,6 +21,9 @@ public class TextAdventure {
         // TODO code application logic here
         
         AdventureFrame af = new AdventureFrame();
+        ChangeLocation cl = new ChangeLocation();
+        
+        
     }
     
 }
