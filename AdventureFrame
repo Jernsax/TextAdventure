@@ -3,6 +3,8 @@ package textadventure;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
+import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Jernsax
  */
 public class AdventureFrame extends JFrame implements ActionListener {
+
+    Player pl = new Player();
 
     JTextArea maintext = new JTextArea(25, 1);
     JTable inventory;
@@ -42,14 +46,14 @@ public class AdventureFrame extends JFrame implements ActionListener {
 
     public AdventureFrame() {
         setTitle("Text adventure");
-        setSize(1000, 1000);
-//        setResizable(false);
+        setSize(1000, 975);
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         this.setJMenuBar(toolBar);
 
+        playerName();
         updateInventory();
-
 
         ok = new JButton("OK");
         west = new JButton("West");
@@ -57,7 +61,7 @@ public class AdventureFrame extends JFrame implements ActionListener {
         north = new JButton("North");
         south = new JButton("South");
         //showMap = new JButton("Map");
-        input = new JTextField(20);
+
         blank = new JLabel();
 
         ok.addActionListener(this);
@@ -67,56 +71,52 @@ public class AdventureFrame extends JFrame implements ActionListener {
         south.addActionListener(this);
         //showMap.addActionListener(this);
 
+        input = new JTextField();
+
         maintext.setEditable(false);
-        
-        
+
         JPanel p = new JPanel();
         p.setLayout(null);
-        
+
         JPanel f = new JPanel();
         JPanel m = new JPanel();
-        
+
 //SetBounds
-        
-        
-        f.setBounds(10, 420, 300, 130);
+        f.setBounds(10, 420, 300, 106);
         m.setBounds(10, 560, 500, 350);
-        ok.setBounds(855, 600, 60, 30);
-        input.setBounds(655, 600, 200, 31);
-        maintext.setBounds(10,10,960,400);
-        
-        
+        ok.setBounds(855, 450, 60, 30);
+        input.setBounds(655, 450, 200, 30);
+        maintext.setBounds(10, 10, 970, 400);
+
         //Compass
         //showMap.setBounds(750, 750, 70, 70);
-        north.setBounds(750, 680, 70 ,70);
+        north.setBounds(750, 680, 70, 70);
         south.setBounds(750, 820, 70, 70);
         west.setBounds(680, 750, 70, 70);
         east.setBounds(820, 750, 70, 70);
-        
-        
-        
-        
-        f.add(new JScrollPane(inventory)); 
-        
+
+        f.add(new JScrollPane(inventory));
+
         p.add(f);
         p.add(m);
-        
 
         p.add(maintext);
         p.add(input);
         p.add(ok);
-       
+
         //Compass
         //p.add(showMap);
         p.add(west);
         p.add(east);
         p.add(north);
         p.add(south);
-        //p.add(showMap);
 
-        maintext.setText("h");
-        m.setBackground(Color.BLUE);
-
+        /*maintext.setText("Det er en mørk og stormfuld nat.\n \n"
+         + pl.getHeroName() + " åbnede døren til slottet og trådte ind i indgangshallen.\n"
+         + "Døren smækkede bag ham.");
+         */
+        m.setBackground(Color.DARK_GRAY);
+        p.setBackground(Color.GRAY);
         this.add(p);
 
         setVisible(true);
@@ -133,6 +133,28 @@ public class AdventureFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
+        
+        ChangeLocation cl = new ChangeLocation();
+        Location l = new Location();
+        
+        String action = input.getText();
+
+        if (ae.getSource() == ok) {
+            if (action.length() == 0) {                
+            }
+            
+            action = action.toUpperCase();
+            
+            
+        }
+
+    }
+
+    public void playerName() {
+
+        String name = JOptionPane.showInputDialog(maintext, "Please enter player Name", "Player Name", WIDTH);
+
+        pl.setHeroName(name);
 
     }
 
