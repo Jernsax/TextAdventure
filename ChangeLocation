@@ -1,0 +1,78 @@
+package textadventure;
+
+import java.awt.Event;
+import java.util.Enumeration;
+import java.util.Vector;
+
+/**
+ *
+ * @author Jernsax
+ */
+public class ChangeLocation {
+        
+    Location currentLocation;
+    
+
+
+    //Constructor
+    public ChangeLocation() {
+        super();
+    }
+
+    public void locations() {
+
+        Location r0 = new Location("Soveværelse", "Du vågner i din seng. Det er mørkt.");
+        Location r1 = new Location("Soveværelse", "Du har tændt lampen og kan nu se. Du skal virkelig tisse.");
+        Location r2 = new Location("Badeværelse", "På badeværelset har du toilettet.");
+        Location r3 = new Location("Gang", "Gangen forbinder køkkenet, stuen og soveværelset");
+        Location r4 = new Location("Køkken", "På køkkenbordet står kaffemaskinen");
+        Location r5 = new Location("Stuen", "På stuebordet står en kaffekop");
+        Location r6 = new Location("Tillykke!", "Ved at tænde for tv'et og sætte dig til rette i sofaen er din søndag morgen nu perfekt!");
+
+        //r0 exits (Mørkt soveværelse)
+        r0.addExit(new Exit(Exit.TÆND_LYS, r1));
+
+        //r1 exits (Soveværelse)
+        r1.addExit(new Exit(Exit.EAST, r3));
+        r1.addExit(new Exit(Exit.NORTH, r2));
+
+        //r2 exits (Badeværelse)
+        r2.addExit(new Exit(Exit.SOUTH, r1));
+
+        //r3 exits (Gang)
+        r3.addExit(new Exit(Exit.WEST, r1));
+        r3.addExit(new Exit(Exit.EAST, r4));
+        r3.addExit(new Exit(Exit.NORTH, r5));
+
+        //r4 exits (Køkken)
+        r4.addExit(new Exit(Exit.WEST, r3));
+
+        //r5 exits (Stue)
+        r5.addExit(new Exit(Exit.SOUTH, r3));
+        r6.addExit(new Exit(Exit.TÆND_TV, r6));
+
+        //Start location
+        showLocation();
+    
+    }
+
+    private void showLocation() {
+
+        AdventureFrame af = new AdventureFrame();
+
+        //Titel
+        af.maintext.setText("\n" + currentLocation.getTitle() + "\n");
+        af.maintext.setText("\n");
+
+        //Description
+        af.maintext.setText(currentLocation.getDescription() + "\n");
+
+        //Exits
+        af.maintext.setText("\nMuligheder: \n");
+        for (Enumeration e = currentLocation.getExits().elements(); e.hasMoreElements();) {
+            Exit option = (Exit) e.nextElement();
+            af.maintext.setText(option + "\n");
+        }
+    }
+    
+}
