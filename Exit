@@ -1,0 +1,105 @@
+package textadventure;
+
+/**
+ *
+ * @author Jernsax
+ */
+public class Exit {
+
+    //Numerical codes
+    public static final int UNDEFINED = 0;
+    public static final int NORTH = 1;
+    public static final int SOUTH = 2;
+    public static final int EAST = 3;
+    public static final int WEST = 4;
+    public static final int TÆND_LYS = 5;
+    public static final int TÆND_TV = 6;
+
+    //String codes
+    public static final String[] dirName
+            = {
+                "UNDEFINED",
+                "NORTH",
+                "SOUTH",
+                "EAST",
+                "WEST",
+                "TÆND_LYS",
+                "TÆND_TV"
+            };
+
+    public static final String[] shortDirName = {
+        "NULL",
+        "N",
+        "S",
+        "E",
+        "W"
+    };
+
+    //Member variables
+    private Location m_leadsTo = null;
+    private int m_direction;
+
+    //Full name of direction eg NORTH
+    private String m_directionName;
+
+    //Short version of direction eg N
+    private String m_shortDirectionName;
+
+    //Default constructor
+    public Exit() {
+        m_direction = Exit.UNDEFINED;
+        m_leadsTo = null;
+        m_directionName = dirName[UNDEFINED];
+        m_shortDirectionName = shortDirName[UNDEFINED];
+    }
+
+        //Full constructor
+    public Exit(int direction, Location leadsTo) {
+        m_direction = direction;
+        //Assign direction names
+        if(direction <= dirName.length)
+            m_directionName = dirName[m_direction];
+        else if(direction <= shortDirName.length)
+            m_directionName = shortDirName[m_direction];
+        
+        //Assign location
+        m_leadsTo = leadsTo;
+    }
+    
+    //To String method
+    public String toString(){
+        return m_directionName; 
+    }
+    
+    //Assign direction Name
+    public void setDirectionName(String dirname){
+        m_directionName = dirname;
+    }
+    
+    //Return direction name
+    public String getDirectionName(){
+        return m_directionName;
+    }
+    
+    //Assign short dir name
+    public void setShortDirectionName(String shortName){
+        m_shortDirectionName = shortName;
+    }
+    
+    //Return short dir name
+    public String getShortDirectionName(){
+        return m_shortDirectionName;
+    }
+    
+    //Assign leads to
+    public void setLeadsTo(Location leadsTo){
+        m_leadsTo = leadsTo;
+    }
+    
+    //Return leads to
+    public Location getLeadsTo(){
+        return m_leadsTo;
+    }
+    
+
+}
