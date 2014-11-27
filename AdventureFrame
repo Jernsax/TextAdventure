@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,11 +15,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AdventureFrame extends JFrame implements ActionListener {
 
+    
+    
     Player pl = new Player();
+    ChangeLocation cl = new ChangeLocation(this);
 
-    JTextArea maintext = new JTextArea(25, 1);
+    JTextArea maintext = new JTextArea(1000, 100);
     JTable inventory;
     JScrollPane inventoryModel = new JScrollPane(inventory);
+
     JTextField input;
 
     JButton ok;
@@ -26,7 +31,7 @@ public class AdventureFrame extends JFrame implements ActionListener {
     JButton east;
     JButton north;
     JButton south;
-    //JButton showMap;
+
     JLabel blank;
 
     JMenuBar toolBar = new JMenuBar();
@@ -42,6 +47,10 @@ public class AdventureFrame extends JFrame implements ActionListener {
         file.add(loadGame);
         file.add(saveGame);
         toolBar.add(file);
+
+        newGame.addActionListener(this);
+        loadGame.addActionListener(this);
+        saveGame.addActionListener(this);
     }
 
     public AdventureFrame() {
@@ -61,8 +70,6 @@ public class AdventureFrame extends JFrame implements ActionListener {
         north = new JButton("North");
         south = new JButton("South");
         //showMap = new JButton("Map");
-
-        blank = new JLabel();
 
         ok.addActionListener(this);
         west.addActionListener(this);
@@ -84,12 +91,12 @@ public class AdventureFrame extends JFrame implements ActionListener {
 //SetBounds
         f.setBounds(10, 420, 300, 106);
         m.setBounds(10, 560, 500, 350);
+
         ok.setBounds(855, 450, 60, 30);
         input.setBounds(655, 450, 200, 30);
         maintext.setBounds(10, 10, 970, 400);
 
         //Compass
-        //showMap.setBounds(750, 750, 70, 70);
         north.setBounds(750, 680, 70, 70);
         south.setBounds(750, 820, 70, 70);
         west.setBounds(680, 750, 70, 70);
@@ -105,22 +112,17 @@ public class AdventureFrame extends JFrame implements ActionListener {
         p.add(ok);
 
         //Compass
-        //p.add(showMap);
         p.add(west);
         p.add(east);
         p.add(north);
         p.add(south);
 
-        /*maintext.setText("Det er en mørk og stormfuld nat.\n \n"
-         + pl.getHeroName() + " åbnede døren til slottet og trådte ind i indgangshallen.\n"
-         + "Døren smækkede bag ham.");
-         */
         m.setBackground(Color.DARK_GRAY);
         p.setBackground(Color.GRAY);
         this.add(p);
 
         setVisible(true);
-
+        cl.locations();
     }
 
     public void updateInventory() {
@@ -133,19 +135,82 @@ public class AdventureFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        
-        ChangeLocation cl = new ChangeLocation();
+
         Location l = new Location();
-        
+
         String action = input.getText();
 
         if (ae.getSource() == ok) {
-            if (action.length() == 0) {                
+            if (action.length() == 0) {
             }
-            
+
             action = action.toUpperCase();
-            
-            
+
+            Location currentLocation = cl.currentLocation;
+
+            for (Enumeration e = currentLocation.getExits().elements(); e.hasMoreElements();) {
+                Exit option = (Exit) e.nextElement();
+
+                if ((option.getDirectionName().compareTo(action) == 0)) {
+                    System.out.println("Location skiftet FRA " + cl.currentLocation);
+
+                    //Set location
+                    currentLocation = option.getLeadsTo();
+                    cl.currentLocation = currentLocation;
+
+                    //Clear maintext
+                    maintext.setText("");
+
+                    //Show
+                    cl.showLocation();
+
+                    //Clear input
+                    input.setText(null);
+
+                }
+
+            }
+
+            input.setText(null);
+
+        } else if (ae.getSource() == newGame) {
+            int optionNewGame = JOptionPane.showConfirmDialog(null, "Ønsker du at starte et nyt spil?");
+            if (optionNewGame == 0) {
+                JOptionPane.showMessageDialog(null, "Nyt spil startet.");
+            }
+            if (optionNewGame == 1) {
+                JOptionPane.showMessageDialog(null, "Nyt spil annuleret.");
+            }
+            if (optionNewGame == 2) {
+                JOptionPane.showMessageDialog(null, "Nyt spil cancel.");
+            }
+        } else if (ae.getSource() == loadGame) {
+            int optionLoadGame = JOptionPane.showConfirmDialog(null, "Ønsker du at hente et tidligere gemt spil?");
+            if (optionLoadGame == 0) {
+                
+
+                JOptionPane.showMessageDialog(null, "Spil er hentet.");
+            }
+            if (optionLoadGame == 1) {
+                JOptionPane.showMessageDialog(null, "Load spil annuleret.");
+            }
+            if (optionLoadGame == 2) {
+                JOptionPane.showMessageDialog(null, "Load spil cancel.");
+            }
+        } else if (ae.getSource() == saveGame) {
+            int optionSaveGame = JOptionPane.showConfirmDialog(null, "Ønsker du at gemme din position?");
+            if (optionSaveGame == 0) {
+                
+
+                JOptionPane.showMessageDialog(null, "Spil er gemt.");
+            }
+            if (optionSaveGame == 1) {
+                JOptionPane.showMessageDialog(null, "Save spil annuleret.");
+            }
+            if (optionSaveGame == 2) {
+                JOptionPane.showMessageDialog(null, "Save spil cancel.");
+            }
+
         }
 
     }
