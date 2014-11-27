@@ -1,5 +1,6 @@
-package textadventure; 
+package textadventure;
 
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.Enumeration;
 
@@ -9,85 +10,90 @@ import java.util.Enumeration;
  */
 public class Location {
 
-    //Member variables
-    private String m_roomTitle;
-    private String m_roomDescription;
-    private Vector m_vecExits;
+    //Location variabler
+    private String locationTitle;
+    private String locationDescription;
+    private Vector locationExits;
+    
+    private Ting ting;
+    private ArrayList<Ting> stuff = new ArrayList<>();
     
     //Blank Constructor
-    public Location(){
+    public Location() {
         // Blank title + description
-        m_roomTitle = new String();
-        m_roomDescription = new String();
-        m_vecExits = new Vector();
+        locationTitle = new String();
+        locationDescription = new String();
+        locationExits = new Vector();
+        
+        
+        
     }
-    
+
+    public ArrayList<Ting> getStuff() {
+        return stuff;
+    }
+
     //Partial constructor
-    public Location (String title){
+    public Location(String title) {
         //Assign title
-        m_roomTitle = title;
-        
+        locationTitle = title;
+
         //Blank description
-        m_roomDescription = new String();
-        
+        locationDescription = new String();
+
         //Blank exits
-        m_vecExits = new Vector();
+        locationExits = new Vector();
     }
-    
+
     //Full Constructor
-    public Location(String title, String description){
+    public Location(String title, String description) {
         //Assign title + description
-        m_roomTitle = title;
-        m_roomDescription = description;
-        
+        locationTitle = title;
+        locationDescription = description;
+
         //Blank exits
-        m_vecExits = new Vector();
+        locationExits = new Vector();
     }
-    
+
     //toString method
-    public String toString(){
-        return m_roomTitle;
+    public String toString() {
+        return locationTitle;
     }
-    
-    //Adds an exit to this location
-    public void addExit (Exit exit){
-        m_vecExits.addElement(exit);
+
+    //Tilføj exits
+    public void addExit(Exit exit) {
+        locationExits.addElement(exit);
     }
-    
+
     //Removes an exit from this location
-    public void removeExit(Exit exit){
-        if (m_vecExits.contains (exit))
-        {
-            m_vecExits.removeElement(exit);
+    public void removeExit(Exit exit) {
+        if (locationExits.contains(exit)) {
+            locationExits.removeElement(exit);
         }
     }
-    
-    //Returns a vector of exits
-    public Vector getExits(){
-        //Return a clone, as we don't want an external
-        // object to modify our original vector
-        return (Vector) m_vecExits.clone();
+
+    //Returnere exits
+    public Vector getExits() {
+        //Åbenbart skal man bruge en clone? Hvorfor?
+        return (Vector) locationExits.clone();
     }
-    
-    
-    //Returns location title
-    public String getTitle(){
-        return m_roomTitle;
+
+    //Get set Title
+    public String getTitle() {
+        return locationTitle;
     }
-    
-    //Assigns location title
-    public void setTitle(String roomTitle)
-    {
-        m_roomTitle = roomTitle;
+
+    public void setTitle(String roomTitle) {
+        locationTitle = roomTitle;
     }
-    
-    //Returns location description
-    public String getDescription(){
-        return m_roomDescription;
+
+    //Get set Description
+    public String getDescription() {
+        return locationDescription;
     }
-    
-    public void setDescription(String roomDescription){
-        m_roomDescription = roomDescription;
+
+    public void setDescription(String roomDescription) {
+        locationDescription = roomDescription;
     }
-            
+
 }
