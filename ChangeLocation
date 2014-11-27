@@ -9,70 +9,118 @@ import java.util.Vector;
  * @author Jernsax
  */
 public class ChangeLocation {
-        
-    Location currentLocation;
-    
 
+    Location currentLocation;
+    AdventureFrame af;
+    Location[] r = new Location[7];
 
     //Constructor
-    public ChangeLocation() {
-        super();
+    public ChangeLocation(AdventureFrame af) {
+        this.af = af;
     }
 
     public void locations() {
-
-        Location r0 = new Location("Soveværelse", "Du vågner i din seng. Det er mørkt.");
-        Location r1 = new Location("Soveværelse", "Du har tændt lampen og kan nu se. Du skal virkelig tisse.");
-        Location r2 = new Location("Badeværelse", "På badeværelset har du toilettet.");
-        Location r3 = new Location("Gang", "Gangen forbinder køkkenet, stuen og soveværelset");
-        Location r4 = new Location("Køkken", "På køkkenbordet står kaffemaskinen");
-        Location r5 = new Location("Stuen", "På stuebordet står en kaffekop");
-        Location r6 = new Location("Tillykke!", "Ved at tænde for tv'et og sætte dig til rette i sofaen er din søndag morgen nu perfekt!");
-
-        //r0 exits (Mørkt soveværelse)
-        r0.addExit(new Exit(Exit.TÆND_LYS, r1));
-
-        //r1 exits (Soveværelse)
-        r1.addExit(new Exit(Exit.EAST, r3));
-        r1.addExit(new Exit(Exit.NORTH, r2));
-
-        //r2 exits (Badeværelse)
-        r2.addExit(new Exit(Exit.SOUTH, r1));
-
-        //r3 exits (Gang)
-        r3.addExit(new Exit(Exit.WEST, r1));
-        r3.addExit(new Exit(Exit.EAST, r4));
-        r3.addExit(new Exit(Exit.NORTH, r5));
-
-        //r4 exits (Køkken)
-        r4.addExit(new Exit(Exit.WEST, r3));
-
-        //r5 exits (Stue)
-        r5.addExit(new Exit(Exit.SOUTH, r3));
-        r6.addExit(new Exit(Exit.TÆND_TV, r6));
+        addLocations();
 
         //Start location
+        currentLocation = r[0];
+
         showLocation();
-    
+
     }
 
-    private void showLocation() {
+    private void addLocations() {
 
-        AdventureFrame af = new AdventureFrame();
+        //Items
+        Ting kaffekop = new Ting("Kaffekop", "Let");
+        Ting tis = new Ting("Tis", "Let");
+        Ting kaffekopFyldt = new Ting("Kaffekop", "Let");
+        Ting sofa = new Ting("Sofa", "Tung");
+        Ting seng = new Ting("Seng", "Tung");
+        Ting bukser = new Ting("Bukser", "Let");
+        Ting lampe = new Ting("Natlampe", "Tung");
+        Ting toilet = new Ting("Toilet", "Tung");
+        Ting kaffemaskine = new Ting("Kaffemaskine", "Tung");
+        Ting sofabord = new Ting("Sofabord", "Tung");
+        Ting tv = new Ting("Fjernsyn", "Tung");
+        Ting fjernbetjening = new Ting("Fjernbetjening", "Let");
+        Ting jakke = new Ting("Jakke", "Let");
+
+        //Locations
+        r[0] = new Location("Soveværelse", "Du vågner i din seng. Det er mørkt.");
+        r[1] = new Location("Soveværelse", "Du har tændt lampen og kan nu se. Du skal virkelig tisse.");
+        r[2] = new Location("Badeværelse", "På badeværelset har du toilettet.");
+        r[3] = new Location("Gang", "Gangen forbinder køkkenet, stuen og soveværelset.");
+        r[4] = new Location("Køkken", "På køkkenbordet står kaffemaskinen");
+        r[5] = new Location("Stue", "På stuebordet står en kaffekop");
+        r[6] = new Location("Tillykke!", "Ved at tænde for tv'et og sætte dig til rette i sofaen er din søndag morgen nu perfekt!");
+
+        //r0 exits og items (Mørkt soveværelse)
+        r[0].addExit(new Exit(Exit.TÆND_LYS, r[1]));
+
+        r[0].getStuff().add(lampe);
+
+        //r1 exits og items  (Soveværelse)
+        r[1].addExit(new Exit(Exit.EAST, r[3]));
+        r[1].addExit(new Exit(Exit.NORTH, r[2]));
+
+        r[1].getStuff().add(bukser);
+        r[1].getStuff().add(lampe);
+        r[1].getStuff().add(seng);
+
+        //r2 exits og items  (Badeværelse)
+        r[2].addExit(new Exit(Exit.SOUTH, r[1]));
+
+        r[2].getStuff().add(toilet);
+
+        //r3 exits og items (Gang)
+        r[3].addExit(new Exit(Exit.WEST, r[1]));
+        r[3].addExit(new Exit(Exit.EAST, r[4]));
+        r[3].addExit(new Exit(Exit.NORTH, r[5]));
+
+        r[3].getStuff().add(jakke);
+
+        //r4 exits og items (Køkken)
+        r[4].addExit(new Exit(Exit.WEST, r[3]));
+
+        r[4].getStuff().add(kaffemaskine);
+
+        //r5 exits og items (Stue)
+        r[5].addExit(new Exit(Exit.SOUTH, r[3]));
+        r[5].addExit(new Exit(Exit.TÆND_TV, r[6]));
+
+        r[5].getStuff().add(sofabord);
+        r[5].getStuff().add(tv);
+        r[5].getStuff().add(fjernbetjening);
+        r[5].getStuff().add(kaffekop);
+        r[5].getStuff().add(sofa);
+
+    }
+
+    public void showLocation() {
 
         //Titel
-        af.maintext.setText("\n" + currentLocation.getTitle() + "\n");
-        af.maintext.setText("\n");
+        af.maintext.append(currentLocation.getTitle());
+
+        af.maintext.append("\n");
 
         //Description
-        af.maintext.setText(currentLocation.getDescription() + "\n");
+        af.maintext.append(currentLocation.getDescription() + "\n");
 
         //Exits
-        af.maintext.setText("\nMuligheder: \n");
+        af.maintext.append("\nMuligheder: \n");
         for (Enumeration e = currentLocation.getExits().elements(); e.hasMoreElements();) {
             Exit option = (Exit) e.nextElement();
-            af.maintext.setText(option + "\n");
+            af.maintext.append(option + "\n");
+
         }
+
+        //Items
+        af.maintext.append("\nI rummet er der følgende ting:\n\n");
+        for (Ting t : currentLocation.getStuff()) {
+            af.maintext.append(t.toString() + "\n");
+        }
+
     }
-    
+
 }
