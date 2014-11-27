@@ -1,0 +1,47 @@
+
+
+package textadventure;
+
+/**
+ *
+ * @author Jernsax
+ */
+public class Ting {
+    String itemName;
+    String weight;
+   
+    
+    public Ting(String itemName, String weight){
+        this.itemName = itemName;
+        this.weight= weight;
+    }
+    
+    
+    public void setItemName(String newItemName){
+        itemName = newItemName;
+    }
+    
+    public String getItemName(){
+        return itemName;
+    }
+    
+    
+    public void setWeight(String newWeight){
+        weight = newWeight;
+    }
+    
+    public String getWeight(){
+        return weight;
+        
+        
+    }
+    
+    public String toString(){
+        return itemName;
+    }
+    
+    
+    
+}
+
+
