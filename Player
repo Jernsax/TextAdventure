@@ -9,10 +9,10 @@ public class Player {
     private String heroName;
     private int heroLocation;
 
-    public Player(){
-        
+    public Player() {
+
     }
-    
+
     public Player(String heroName, int herLocation) {
 
         this.heroName = heroName;
