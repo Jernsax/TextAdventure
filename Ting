@@ -2,11 +2,13 @@
 
 package textadventure;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Jernsax
  */
-public class Ting {
+public class Ting implements Serializable{
     String itemName;
     String weight;
    
