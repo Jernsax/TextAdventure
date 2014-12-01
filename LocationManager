@@ -1,6 +1,7 @@
 package textadventure;
 
 import java.awt.Event;
+import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -8,14 +9,14 @@ import java.util.Vector;
  *
  * @author Jernsax
  */
-public class ChangeLocation {
+public class LocationManager implements Serializable {
 
     Location currentLocation;
     AdventureFrame af;
-    Location[] r = new Location[7];
+    Location[] r = new Location[8];
 
     //Constructor
-    public ChangeLocation(AdventureFrame af) {
+    public LocationManager(AdventureFrame af) {
         this.af = af;
     }
 
@@ -25,7 +26,7 @@ public class ChangeLocation {
         //Start location
         currentLocation = r[0];
 
-        showLocation();
+        af.showLocation();
 
     }
 
@@ -47,13 +48,14 @@ public class ChangeLocation {
         Ting jakke = new Ting("Jakke", "Let");
 
         //Locations
-        r[0] = new Location("Soveværelse", "Du vågner i din seng. Det er mørkt.");
+        r[0] = new Location("Soveværelse mørkt", "Du vågner i din seng. Det er mørkt.");
         r[1] = new Location("Soveværelse", "Du har tændt lampen og kan nu se. Du skal virkelig tisse.");
         r[2] = new Location("Badeværelse", "På badeværelset har du toilettet.");
         r[3] = new Location("Gang", "Gangen forbinder køkkenet, stuen og soveværelset.");
         r[4] = new Location("Køkken", "På køkkenbordet står kaffemaskinen");
         r[5] = new Location("Stue", "På stuebordet står en kaffekop");
         r[6] = new Location("Tillykke!", "Ved at tænde for tv'et og sætte dig til rette i sofaen er din søndag morgen nu perfekt!");
+        r[7] = new Location("Ad!", "Du nåede ikke på toilettet, og har nu tisset ud over hele gulvet.\nDin søndag morgen er nu ødelagt.\nStart et new game for at prøve igen.");
 
         //r0 exits og items (Mørkt soveværelse)
         r[0].addExit(new Exit(Exit.TÆND_LYS, r[1]));
@@ -97,30 +99,11 @@ public class ChangeLocation {
 
     }
 
-    public void showLocation() {
-
-        //Titel
-        af.maintext.append(currentLocation.getTitle());
-
-        af.maintext.append("\n");
-
-        //Description
-        af.maintext.append(currentLocation.getDescription() + "\n");
-
-        //Exits
-        af.maintext.append("\nMuligheder: \n");
-        for (Enumeration e = currentLocation.getExits().elements(); e.hasMoreElements();) {
-            Exit option = (Exit) e.nextElement();
-            af.maintext.append(option + "\n");
-
-        }
-
-        //Items
-        af.maintext.append("\nI rummet er der følgende ting:\n\n");
-        for (Ting t : currentLocation.getStuff()) {
-            af.maintext.append(t.toString() + "\n");
-        }
-
+    
+    
+    public void setAdventureFrame(AdventureFrame af){
+        af = this.af;
+        
     }
 
 }
