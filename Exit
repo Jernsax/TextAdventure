@@ -1,10 +1,12 @@
 package textadventure;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Jernsax
  */
-public class Exit {
+public class Exit  implements Serializable {
 
     public static final int UNDEFINED = 0;
     public static final int NORTH = 1;
