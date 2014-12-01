@@ -1,14 +1,14 @@
 package textadventure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
-import java.util.Enumeration;
 
 /**
  *
  * @author Jernsax
  */
-public class Location {
+public class Location  implements Serializable {
 
     //Location variabler
     private String locationTitle;
