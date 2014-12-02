@@ -33,69 +33,69 @@ public class LocationManager implements Serializable {
     private void addLocations() {
 
         //Items
-        Ting kaffekop = new Ting("Kaffekop", "Let");
-        Ting tis = new Ting("Tis", "Let");
-        Ting kaffekopFyldt = new Ting("Kaffekop", "Let");
-        Ting sofa = new Ting("Sofa", "Tung");
-        Ting seng = new Ting("Seng", "Tung");
-        Ting bukser = new Ting("Bukser", "Let");
-        Ting lampe = new Ting("Natlampe", "Tung");
-        Ting toilet = new Ting("Toilet", "Tung");
-        Ting kaffemaskine = new Ting("Kaffemaskine", "Tung");
-        Ting sofabord = new Ting("Sofabord", "Tung");
-        Ting tv = new Ting("Fjernsyn", "Tung");
-        Ting fjernbetjening = new Ting("Fjernbetjening", "Let");
-        Ting jakke = new Ting("Jakke", "Let");
+        Ting KAFFEKOP = new Ting("Kaffekop", "Let");
+        Ting TIS = new Ting("Tis", "Let");
+        Ting KAFFEKOPFYLDT = new Ting("Kaffekop", "Let");
+        Ting SOFA = new Ting("Sofa", "Tung");
+        Ting SENG = new Ting("Seng", "Tung");
+        Ting BUKSER = new Ting("Bukser", "Let");
+        Ting LAMPE = new Ting("Natlampe", "Tung");
+        Ting TOILET = new Ting("Toilet", "Tung");
+        Ting KAFFEMASKINE = new Ting("Kaffemaskine", "Tung");
+        Ting SOFABORD = new Ting("Sofabord", "Tung");
+        Ting TV = new Ting("Fjernsyn", "Tung");
+        Ting FJERNBETJENING = new Ting("Fjernbetjening", "Let");
+        Ting JAKKE = new Ting("Jakke", "Let");
 
         //Locations
-        r[0] = new Location("Soveværelse mørkt", "Du vågner i din seng. Det er mørkt.");
-        r[1] = new Location("Soveværelse", "Du har tændt lampen og kan nu se. Du skal virkelig tisse.");
-        r[2] = new Location("Badeværelse", "På badeværelset har du toilettet.");
-        r[3] = new Location("Gang", "Gangen forbinder køkkenet, stuen og soveværelset.");
-        r[4] = new Location("Køkken", "På køkkenbordet står kaffemaskinen");
-        r[5] = new Location("Stue", "På stuebordet står en kaffekop");
-        r[6] = new Location("Tillykke!", "Ved at tænde for tv'et og sætte dig til rette i sofaen er din søndag morgen nu perfekt!");
-        r[7] = new Location("Ad!", "Du nåede ikke på toilettet, og har nu tisset ud over hele gulvet.\nDin søndag morgen er nu ødelagt.\nStart et new game for at prøve igen.");
+        r[0] = new Location("Soveværelse mørkt", "Du vågner i din seng. Det er mørkt.", "TextAdventureMap/sort.jpg");
+        r[1] = new Location("Soveværelse", "Du har tændt lampen og kan nu se. Du skal virkelig tisse.", "TextAdventureMap/sovevaerelse.jpg");
+        r[2] = new Location("Badeværelse", "På badeværelset har du toilettet.", "TextAdventureMap/badevaerelse.jpg");
+        r[3] = new Location("Gang", "Gangen forbinder køkkenet, stuen og soveværelset.", "TextAdventureMap/gang.jpg");
+        r[4] = new Location("Køkken", "På køkkenbordet står kaffemaskinen", "TextAdventureMap/koekken.jpg");
+        r[5] = new Location("Stue", "På stuebordet står en kaffekop", "TextAdventureMap/stue.jpg");
+        r[6] = new Location("Tillykke!", "Ved at tænde for tv'et og sætte dig til rette i sofaen er din søndag morgen nu perfekt!", "TextAdventureMap/win.jpg");
+        r[7] = new Location("Ad!", "Du nåede ikke på toilettet, og har nu tisset ud over hele gulvet.\nDin søndag morgen er nu ødelagt.\nStart et new game for at prøve igen.", "TextAdventureMap/loss.jpg");
 
         //r0 exits og items (Mørkt soveværelse)
         r[0].addExit(new Exit(Exit.TÆND_LYS, r[1]));
 
-        r[0].getStuff().add(lampe);
+        r[0].getStuff().add(LAMPE);
 
         //r1 exits og items  (Soveværelse)
         r[1].addExit(new Exit(Exit.EAST, r[3]));
         r[1].addExit(new Exit(Exit.NORTH, r[2]));
 
-        r[1].getStuff().add(bukser);
-        r[1].getStuff().add(lampe);
-        r[1].getStuff().add(seng);
+        r[1].getStuff().add(BUKSER);
+        r[1].getStuff().add(LAMPE);
+        r[1].getStuff().add(SENG);
 
         //r2 exits og items  (Badeværelse)
         r[2].addExit(new Exit(Exit.SOUTH, r[1]));
 
-        r[2].getStuff().add(toilet);
+        r[2].getStuff().add(TOILET);
 
         //r3 exits og items (Gang)
         r[3].addExit(new Exit(Exit.WEST, r[1]));
         r[3].addExit(new Exit(Exit.EAST, r[4]));
         r[3].addExit(new Exit(Exit.NORTH, r[5]));
 
-        r[3].getStuff().add(jakke);
+        r[3].getStuff().add(JAKKE);
 
         //r4 exits og items (Køkken)
         r[4].addExit(new Exit(Exit.WEST, r[3]));
 
-        r[4].getStuff().add(kaffemaskine);
+        r[4].getStuff().add(KAFFEMASKINE);
 
         //r5 exits og items (Stue)
         r[5].addExit(new Exit(Exit.SOUTH, r[3]));
         r[5].addExit(new Exit(Exit.TÆND_TV, r[6]));
 
-        r[5].getStuff().add(sofabord);
-        r[5].getStuff().add(tv);
-        r[5].getStuff().add(fjernbetjening);
-        r[5].getStuff().add(kaffekop);
-        r[5].getStuff().add(sofa);
+        r[5].getStuff().add(SOFABORD);
+        r[5].getStuff().add(TV);
+        r[5].getStuff().add(FJERNBETJENING);
+        r[5].getStuff().add(KAFFEKOP);
+        r[5].getStuff().add(SOFA);
 
     }
 
