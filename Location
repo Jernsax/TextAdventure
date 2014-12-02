@@ -14,27 +14,29 @@ public class Location  implements Serializable {
     private String locationTitle;
     private String locationDescription;
     private Vector locationExits;
+    private String imageLocation;
     
     private Ting ting;
     private ArrayList<Ting> stuff = new ArrayList<>();
     
     //Blank Constructor
-    public Location() {
+ /*   public Location() {
         // Blank title + description
         locationTitle = new String();
         locationDescription = new String();
         locationExits = new Vector();
+        imageLocation = new String();
         
         
         
-    }
+    }*/
 
     public ArrayList<Ting> getStuff() {
         return stuff;
     }
 
     //Partial constructor
-    public Location(String title) {
+ /*   public Location(String title) {
         //Assign title
         locationTitle = title;
 
@@ -43,16 +45,20 @@ public class Location  implements Serializable {
 
         //Blank exits
         locationExits = new Vector();
-    }
+        
+        imageLocation = new String();
+    }*/
 
     //Full Constructor
-    public Location(String title, String description) {
+    public Location(String title, String description, String imagePath) {
         //Assign title + description
         locationTitle = title;
         locationDescription = description;
 
         //Blank exits
         locationExits = new Vector();
+        
+        imageLocation = imagePath;
     }
 
     //toString method
@@ -94,6 +100,15 @@ public class Location  implements Serializable {
 
     public void setDescription(String roomDescription) {
         locationDescription = roomDescription;
+    }
+    
+    //Get set Imagelocation
+    public void setImageLocation(String imagePath){
+        imageLocation = imagePath;
+    }
+    
+    public String getImageLocation(){
+        return imageLocation;
     }
 
 }
