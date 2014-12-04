@@ -6,7 +6,7 @@ import java.io.Serializable;
  *
  * @author Jernsax
  */
-public class Exit  implements Serializable {
+public class Exit implements Serializable {
 
     public static final int UNDEFINED = 0;
     public static final int NORTH = 1;
@@ -15,6 +15,7 @@ public class Exit  implements Serializable {
     public static final int WEST = 4;
     public static final int TÆND_LYS = 5;
     public static final int TÆND_TV = 6;
+    public static final int TIS = 7;
 
     //Retninger
     public static final String[] dirName
@@ -25,10 +26,9 @@ public class Exit  implements Serializable {
                 "EAST",
                 "WEST",
                 "TÆND_LYS",
-                "TÆND_TV"
+                "TÆND_TV",
+                "TIS"
             };
-
-
 
     //exit variable
     private Location exitLeadsTo = null;
@@ -37,22 +37,13 @@ public class Exit  implements Serializable {
     //Long name
     private String exitDirectionName;
 
-
-    //1.constructor
-    /*public Exit() {
-        exitDirection = Exit.UNDEFINED;
-        exitLeadsTo = null;
-        exitDirectionName = dirName[UNDEFINED];
-        
-    }*/
-
     //2.constructor
     public Exit(int direction, Location leadsTo) {
         exitDirection = direction;
 
         if (direction <= dirName.length) {
             exitDirectionName = dirName[exitDirection];
-        } 
+        }
 
         exitLeadsTo = leadsTo;
     }
@@ -71,7 +62,6 @@ public class Exit  implements Serializable {
     public String getDirectionName() {
         return exitDirectionName;
     }
-
 
     //Set get LeadsTo
     public void setLeadsTo(Location leadsTo) {
