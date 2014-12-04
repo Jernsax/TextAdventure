@@ -1,9 +1,6 @@
 package textadventure;
 
-import java.awt.Event;
 import java.io.Serializable;
-import java.util.Enumeration;
-import java.util.Vector;
 
 /**
  *
@@ -13,7 +10,7 @@ public class LocationManager implements Serializable {
 
     Location currentLocation;
     AdventureFrame af;
-    Location[] r = new Location[8];
+    Location[] r = new Location[9];
 
     //Constructor
     public LocationManager(AdventureFrame af) {
@@ -46,16 +43,37 @@ public class LocationManager implements Serializable {
         Ting TV = new Ting("Fjernsyn", "Tung");
         Ting FJERNBETJENING = new Ting("Fjernbetjening", "Let");
         Ting JAKKE = new Ting("Jakke", "Let");
+        Ting KØLESKAB = new Ting("Køleskab", "Tung");
 
         //Locations
-        r[0] = new Location("Soveværelse mørkt", "Du vågner i din seng. Det er mørkt.", "TextAdventureMap/sort.jpg");
-        r[1] = new Location("Soveværelse", "Du har tændt lampen og kan nu se. Du skal virkelig tisse.", "TextAdventureMap/sovevaerelse.jpg");
-        r[2] = new Location("Badeværelse", "På badeværelset har du toilettet.", "TextAdventureMap/badevaerelse.jpg");
-        r[3] = new Location("Gang", "Gangen forbinder køkkenet, stuen og soveværelset.", "TextAdventureMap/gang.jpg");
-        r[4] = new Location("Køkken", "På køkkenbordet står kaffemaskinen", "TextAdventureMap/koekken.jpg");
-        r[5] = new Location("Stue", "På stuebordet står en kaffekop", "TextAdventureMap/stue.jpg");
-        r[6] = new Location("Tillykke!", "Ved at tænde for tv'et og sætte dig til rette i sofaen er din søndag morgen nu perfekt!", "TextAdventureMap/win.jpg");
-        r[7] = new Location("Ad!", "Du nåede ikke på toilettet, og har nu tisset ud over hele gulvet.\nDin søndag morgen er nu ødelagt.\nStart et new game for at prøve igen.", "TextAdventureMap/loss.jpg");
+        r[0] = new Location("Soveværelse mørkt", "Du vågner i din seng. Det er mørkt. På vækkeurets display blinker tallen 08:55 i en hidsig rød farve, der skærer i dine øjne.\n\n"
+                + "*BEEP* *BEEP *BEEP*\n\n"
+                + "Urgh. De sidste fragmenter af din drøm forsvinder da du rækker ud og rammer SNOOZE på vækkeuret.\n\n"
+                + "Sekundet efter går det op for dig, at det er søndag. Heksene fra Warren Manor kommer på TV om 5 minutter!\n\n"
+                + "Ude fra køkkenet hører du den spruttende lyd fra den automatiske kaffemaskine, der netop har lavet en dampende kop macchiato.\n\n"
+                + "I samme øjeblik kan du mærke hvordan din blære pludselig trækker sig sammen. Du skal virkelig tisse, og det skal være nu!\n", "TextAdventureMap/sort.jpg");
+
+        r[1] = new Location("Soveværelse", "I soveværelset ligger dit tøj spredt på gulvet. Måske skulle du også rydde op idag.", "TextAdventureMap/sovevaerelse.jpg");
+
+        r[2] = new Location("Badeværelse", "Badeværelsesgulvet er koldt da du tripper hen foran håndvasken. Du kigger dig i spejlet, men kigger hurtigt væk igen. Urgh, dårlig ide.", "TextAdventureMap/badevaerelse.jpg");
+
+        r[3] = new Location("Gang", "I gangen ligger din jakke på gulvet, og du træder hen over den med trænet ynde. Den kan ligge der længe endnu.", "TextAdventureMap/gang.jpg");
+
+        r[4] = new Location("Køkken", "På køkkenbordet står din Tassimo, stadig dampende efter den kop kaffe, den netop har produceret.\n\n"
+                + "I vasken står gårsdagens opvask. Eller er det fra dagen før?", "TextAdventureMap/koekken.jpg");
+
+        r[5] = new Location("Stue", "På stuebordet flyder magasiner og blade. Din yndlingsplads i sofaen er akkurat ryddet.", "TextAdventureMap/stue.jpg");
+
+        r[6] = new Location("Stue", "Du tænder fjernsynet netop som introen til Heksene fra Warren Manor runder af. Din timing er perfekt.\n\n"
+                + "En mere uproduktiv søndag kan man ikke forestille sig.\n\n\n"
+                + "Tillykke! Du har vundet spillet! Start et nyt spil for at prøve igen!", "TextAdventureMap/win.jpg");
+
+        r[7] = new Location("God damn it!", "Du skulle måske være gået på toilettet, for nu er det i den grad forsent.\n\n"
+                + "En gylden sø samler sig omkring dine fødder, og nu er din søndag morgen i den grad ødelagt.\n"
+                + "Du når helt sikkert ikke at se Heksene fra Warren Manor. Pokkers!\n\n\n"
+                + "Øv, du har tabt spillet! Start et nyt spil for at prøve igen!", "TextAdventureMap/loss.jpg");
+
+        r[8] = new Location("Badeværelse", "Ahh, det var lige hvad du trængte til.\n\n Nu er du klar til en dag i sofaen.", "TextAdventureMap/badevaerelse.jpg");
 
         //r0 exits og items (Mørkt soveværelse)
         r[0].addExit(new Exit(Exit.TÆND_LYS, r[1]));
@@ -72,6 +90,7 @@ public class LocationManager implements Serializable {
 
         //r2 exits og items  (Badeværelse)
         r[2].addExit(new Exit(Exit.SOUTH, r[1]));
+        r[2].addExit(new Exit(Exit.TIS, r[8]));
 
         r[2].getStuff().add(TOILET);
 
@@ -86,6 +105,8 @@ public class LocationManager implements Serializable {
         r[4].addExit(new Exit(Exit.WEST, r[3]));
 
         r[4].getStuff().add(KAFFEMASKINE);
+        r[4].getStuff().add(KAFFEKOP);
+        r[4].getStuff().add(KØLESKAB);
 
         //r5 exits og items (Stue)
         r[5].addExit(new Exit(Exit.SOUTH, r[3]));
@@ -94,16 +115,19 @@ public class LocationManager implements Serializable {
         r[5].getStuff().add(SOFABORD);
         r[5].getStuff().add(TV);
         r[5].getStuff().add(FJERNBETJENING);
-        r[5].getStuff().add(KAFFEKOP);
+
         r[5].getStuff().add(SOFA);
+
+        //r8 toilet, tisset
+        r[8].addExit(new Exit(Exit.SOUTH, r[1]));
+
+        r[8].getStuff().add(TOILET);
 
     }
 
-    
-    
-    public void setAdventureFrame(AdventureFrame af){
+    public void setAdventureFrame(AdventureFrame af) {
         af = this.af;
-        
+
     }
 
 }
