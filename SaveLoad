@@ -12,22 +12,26 @@ import java.io.ObjectOutputStream;
  * @author Rolst
  */
 public class SaveLoad {
-    
+
     private final String fileName = "GameData.dat";
+    private final String newGame = "NewGame.dat";
 
     private static LocationManager lm = null;
-    
+
     //singleton constructor
     private static SaveLoad sl = new SaveLoad();
-    private SaveLoad() {};
+
+    private SaveLoad() {
+    }
+
+    ;
     public static SaveLoad getDisc() {
-        if(sl == null) {
+        if (sl == null) {
             sl = new SaveLoad();
         }
         return sl;
     }
-    
-        
+
     public boolean save(LocationManager locman) {
         FileOutputStream fileOut = null;
         ObjectOutputStream out = null;
@@ -53,9 +57,9 @@ public class SaveLoad {
 
     public LocationManager load() {
         try (
-            FileInputStream fileIn = new FileInputStream(fileName); //create file to reading stream
-            ObjectInputStream in = new ObjectInputStream(fileIn) //create stream for object from file stream
-            ) {
+                FileInputStream fileIn = new FileInputStream(fileName); //create file to reading stream
+                ObjectInputStream in = new ObjectInputStream(fileIn) //create stream for object from file stream
+                ) {
             try {
                 lm = (LocationManager) in.readObject();
             } catch (IOException | ClassNotFoundException e) {
@@ -68,9 +72,26 @@ public class SaveLoad {
         }
         return lm;
     }
- 
+
+    public LocationManager newGame() {
+        try (
+                FileInputStream fileIn = new FileInputStream(newGame); //create file to reading stream
+                ObjectInputStream in = new ObjectInputStream(fileIn) //create stream for object from file stream
+                ) {
+            try {
+                lm = (LocationManager) in.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println(e);
+                return lm;
+            }
+        } catch (IOException i) {
+            System.out.println(i);
+            System.out.println("Filen eksisterer ikke...");
+        }
+        return lm;
+    }
+
     private LocationManager getLM() {
         return lm;
     }
 }
-    
