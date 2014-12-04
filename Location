@@ -8,28 +8,21 @@ import java.util.Vector;
  *
  * @author Jernsax
  */
-public class Location  implements Serializable {
+public class Location implements Serializable {
 
     //Location variabler
     private String locationTitle;
     private String locationDescription;
     private Vector locationExits;
     private String imageLocation;
-    
+
     private Ting ting;
     private ArrayList<Ting> stuff = new ArrayList<>();
-    
+
     //Blank Constructor
- /*   public Location() {
-        // Blank title + description
-        locationTitle = new String();
-        locationDescription = new String();
-        locationExits = new Vector();
-        imageLocation = new String();
-        
-        
-        
-    }*/
+    public Location() {
+
+    }
 
     public ArrayList<Ting> getStuff() {
         return stuff;
@@ -37,18 +30,17 @@ public class Location  implements Serializable {
 
     //Partial constructor
  /*   public Location(String title) {
-        //Assign title
-        locationTitle = title;
+     //Assign title
+     locationTitle = title;
 
-        //Blank description
-        locationDescription = new String();
+     //Blank description
+     locationDescription = new String();
 
-        //Blank exits
-        locationExits = new Vector();
+     //Blank exits
+     locationExits = new Vector();
         
-        imageLocation = new String();
-    }*/
-
+     imageLocation = new String();
+     }*/
     //Full Constructor
     public Location(String title, String description, String imagePath) {
         //Assign title + description
@@ -57,11 +49,12 @@ public class Location  implements Serializable {
 
         //Blank exits
         locationExits = new Vector();
-        
+
         imageLocation = imagePath;
     }
 
     //toString method
+    @Override
     public String toString() {
         return locationTitle;
     }
@@ -101,14 +94,22 @@ public class Location  implements Serializable {
     public void setDescription(String roomDescription) {
         locationDescription = roomDescription;
     }
-    
+
     //Get set Imagelocation
-    public void setImageLocation(String imagePath){
+    public void setImageLocation(String imagePath) {
         imageLocation = imagePath;
     }
-    
-    public String getImageLocation(){
+
+    public String getImageLocation() {
         return imageLocation;
+    }
+
+    public void remove(String navn) {
+        for (Ting temp : stuff) {
+            if (temp.getItemName().equalsIgnoreCase(navn)) {
+                stuff.remove(temp);
+            }
+        }
     }
 
 }
