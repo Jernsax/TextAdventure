@@ -3,15 +3,8 @@ package textadventure;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Vector;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,11 +12,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AdventureFrame extends JFrame implements ActionListener {
 
-    Player pl = new Player();
+    Items it = new Items();
     LocationManager cl = new LocationManager(this);
     AdventureFrame denne = this;
 
-    //private BufferedImage locationMap;
+    String pee = "Tis";
+    String kaffe;
+    String remote;
+
     JTextArea maintext = new JTextArea(1000, 100);
     JTable inventory;
     JScrollPane inventoryModel = new JScrollPane(inventory);
@@ -33,14 +29,16 @@ public class AdventureFrame extends JFrame implements ActionListener {
 
     JLabel b = new JLabel();
 
+    JLabel slot1 = new JLabel();
+    JLabel slot2 = new JLabel();
+    JLabel slot3 = new JLabel();
+    JLabel slot4 = new JLabel();
+
     final JPanel p = new JPanel();
     final JPanel m = new JPanel();
+    JPanel f = new JPanel();
 
     JButton ok;
-    JButton west;
-    JButton east;
-    JButton north;
-    JButton south;
 
     int actionCounter = 1;
 
@@ -72,20 +70,9 @@ public class AdventureFrame extends JFrame implements ActionListener {
 
         this.setJMenuBar(toolBar);
 
-        playerName();
-        updateInventory();
-
         ok = new JButton("OK");
-        west = new JButton("West");
-        east = new JButton("East");
-        north = new JButton("North");
-        south = new JButton("South");
 
         ok.addActionListener(this);
-        west.addActionListener(this);
-        east.addActionListener(this);
-        north.addActionListener(this);
-        south.addActionListener(this);
 
         input = new JTextField();
 
@@ -94,28 +81,27 @@ public class AdventureFrame extends JFrame implements ActionListener {
 
         p.setLayout(null);
 
-        JPanel f = new JPanel();
+        JLabel inventory = new JLabel("Inventory");
 
+        f.setLayout(new GridLayout(5, 0));
+        f.add(inventory);
+        f.add(slot1);
+        f.add(slot2);
+        f.add(slot3);
+        f.add(slot4);
 //SetBounds
-        f.setBounds(10, 420, 300, 106);
+        f.setBounds(10, 430, 230, 106);
 
-        m.setBounds(10, 560, 500, 350);
+        m.setBounds(250, 555, 500, 355);
         p.add(m);
-        ok.setBounds(855, 450, 60, 30);
-        input.setBounds(655, 450, 200, 30);
+        ok.setBounds(920, 450, 60, 30);
+        input.setBounds(710, 450, 200, 30);
         maintext.setBounds(10, 10, 970, 400);
-        actionCount.setBounds(855, 500, 60, 30);
-        actionCountLabel.setBounds(770, 500, 80, 30);
+        actionCount.setBounds(920, 500, 60, 30);
+        actionCountLabel.setBounds(830, 500, 80, 30);
         actionCountLabel.setText("Antal actions:");
 
-        //Compass
-        north.setBounds(750, 680, 70, 70);
-        south.setBounds(750, 820, 70, 70);
-        west.setBounds(680, 750, 70, 70);
-        east.setBounds(820, 750, 70, 70);
-
-        f.add(new JScrollPane(inventory));
-
+        //f.add(inventory);
         p.add(f);
 
         p.add(maintext);
@@ -124,35 +110,23 @@ public class AdventureFrame extends JFrame implements ActionListener {
         p.add(actionCount);
         p.add(actionCountLabel);
 
-        //Compass
-        p.add(west);
-        p.add(east);
-        p.add(north);
-        p.add(south);
-
         p.setBackground(Color.GRAY);
-        //m.setBackground(Color.PINK);
+        m.setBackground(Color.GRAY);
+        f.setBackground(Color.WHITE);
+        actionCount.setBackground(Color.WHITE);
         this.add(p);
 
         setVisible(true);
+
+        //Add tis til inventory
+        slot1.setText(pee);
         cl.locations();
-    }
 
-    public void updateInventory() {
-        DefaultTableModel inventoryModel = new DefaultTableModel();
-        inventory = new JTable(inventoryModel);
-
-        inventoryModel.setColumnIdentifiers(new String[]{"Items"});
-        inventoryModel.setRowCount(pl.getInventory().size());
-
-        int row = 0;
-        for (Player i : pl.getInventory()) {
-            inventoryModel.setValueAt(i.getInventory(), row, 0); //TJEK DET HER
-        }
     }
 
     public void updateActionCounter() {
-        actionCount.setText(actionCounter++ + "");
+        int tempAction = actionCounter++;
+        actionCount.setText(tempAction + "");
     }
 
     public void takeItem() {
@@ -163,14 +137,7 @@ public class AdventureFrame extends JFrame implements ActionListener {
     public void setMap() {
 
         ImageIcon map = new ImageIcon(cl.currentLocation.getImageLocation());
-        System.out.println(cl.currentLocation.getImageLocation());
-        //ImageIcon map = new ImageIcon("sort.jpg");
         b.setIcon(map);
-        //b.setBounds(10, 560, 500, 350);
-        System.out.println("label: " + b.toString());
-
-        this.repaint();
-        //p.add(b);
 
     }
 
@@ -208,7 +175,6 @@ public class AdventureFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
 
-        //Location l = new Location();
         String action = input.getText();
 
         if (ae.getSource() == ok) {
@@ -219,8 +185,108 @@ public class AdventureFrame extends JFrame implements ActionListener {
 
             } else {
 
-                if (actionCounter == 40) {
-                    JOptionPane.showMessageDialog(null, "Har du tisset?");
+                if (actionCounter == 4 && pee.equals("Tis")) {
+
+                    JOptionPane.showMessageDialog(null, "Du skulle måske være gået på toilettet, for nu er det i den grad forsent.\n\n"
+                            + "En gylden sø samler sig omkring dine fødder, og nu er din søndag morgen i den grad ødelagt.\n\n"
+                            + "Du når helt sikkert ikke at se Heksene fra Warren Manor. Pokkers!\n\n\n"
+                            + "Øv, du har tabt spillet! Start et nyt spil for at prøve igen!\n");
+
+                } else if (action.toUpperCase().equals("KAFFEKOP")) {
+
+                    JOptionPane.showMessageDialog(null, "En kop varm macchiato i en semiren kop er altid en god måde at starte dagen på!");
+
+                    cl.currentLocation.getStuff().remove(1);
+
+                    slot2.setText("Kaffekop");
+                    kaffe = "Kaffe";
+
+                    showLocation();
+
+                } else if (action.toUpperCase().equals("BUKSER")) {
+                    JOptionPane.showMessageDialog(null, "Bukserne trænger egentlig til at blive vasket. Men de kan godt gå en dag mere. Måske to.");
+
+                    cl.currentLocation.getStuff().remove(0);
+
+                    slot3.setText("Bukser");
+
+                    showLocation();
+
+                } else if (action.toUpperCase().equals("FJERNBETJENING")) {
+
+                    JOptionPane.showMessageDialog(null, "Fjernbetjeningen er ved at løbe tør for strøm, men den skal bare have et par klask før den virker.");
+
+                    cl.currentLocation.getStuff().remove(2);
+
+                    slot4.setText("Fjernbetjening");
+
+                    remote = "Fjernbetjening";
+
+                    showLocation();
+
+                } else if (action.toUpperCase().equals("FJERNSYN")) {
+
+                    JOptionPane.showMessageDialog(null, "Du føler ikke for at bære rundt på fjernsynet lige nu.\n\nVille det ikke være langt bedre at se noget fjernsyn?");
+
+                } else if (action.toUpperCase().equals("SOFABORD")) {
+
+                    JOptionPane.showMessageDialog(null, "Sofabordet er rodet og tungt.\n\nDet er ikke lige til at flytte.");
+
+                } else if (action.toUpperCase().equals("SOFA")) {
+
+                    JOptionPane.showMessageDialog(null, "Sofaen er gammel og støvet.\n\nDer er lige en siddeplads i hjørnet, resten er dækket i magasiner og Playstationspil.");
+
+                } else if (action.toUpperCase().equals("KAFFEMASKINE")) {
+
+                    JOptionPane.showMessageDialog(null, "Kaffemaskinen er meget varm.");
+
+                } else if (action.toUpperCase().equals("NATLAMPE")) {
+
+                    JOptionPane.showMessageDialog(null, "Natlampen er en gammel en, og ledningen er en smule mør.\n\nDet er nok ikke en god ide at flytte rundt på den.");
+
+                } else if (action.toUpperCase().equals("SENG")) {
+
+                    JOptionPane.showMessageDialog(null, "Din seng står fint, hvor den står. Lad nu den stå.");
+
+                } else if (action.toUpperCase().equals("TOILET")) {
+
+                    JOptionPane.showMessageDialog(null, "Dit toilet trænger til en rengøring.\n\nMåske senere idag? Naaah.");
+
+                } else if (action.toUpperCase().equals("JAKKE")) {
+
+                    JOptionPane.showMessageDialog(null, "Hvornår har du egentlig sidst haft jakken på?\n\nDen har ihvertfald ligget på gulvet længe!");
+
+                } else if (action.toUpperCase().equals("KØLESKAB")) {
+
+                    JOptionPane.showMessageDialog(null, "Køleskabet er tomt, pånær for en pizzabakke.\n\nDu kigger forhåbningsfuldt i den, men den er også tom.");
+
+                } else if (action.toUpperCase().equals("TIS")) {
+
+                    action = action.toUpperCase();
+
+                    Location currentLocation = cl.currentLocation;
+
+                    for (Enumeration e = currentLocation.getExits().elements(); e.hasMoreElements();) {
+                        Exit option = (Exit) e.nextElement();
+
+                        if ((option.getDirectionName().compareTo(action) == 0)) {
+
+                            //Set location
+                            currentLocation = option.getLeadsTo();
+                            cl.currentLocation = currentLocation;
+
+                            //Clear maintext
+                            maintext.setText("");
+
+                            //Show
+                            showLocation();
+                            pee = "";
+                            slot1.setText("");
+                            //Clear input
+                            input.setText(null);
+
+                        }
+                    }
 
                 } else {
 
@@ -257,6 +323,11 @@ public class AdventureFrame extends JFrame implements ActionListener {
         } else if (ae.getSource() == newGame) {
             int optionNewGame = JOptionPane.showConfirmDialog(null, "Ønsker du at starte et nyt spil?");
             if (optionNewGame == 0) {
+                cl = SaveLoad.getDisc().newGame();
+                cl.setAdventureFrame(denne);
+
+                showLocation();
+
                 JOptionPane.showMessageDialog(null, "Nyt spil startet.");
             }
             if (optionNewGame == 1) {
@@ -269,6 +340,7 @@ public class AdventureFrame extends JFrame implements ActionListener {
             int optionLoadGame = JOptionPane.showConfirmDialog(null, "Ønsker du at hente et tidligere gemt spil?");
             if (optionLoadGame == 0) {
                 cl = SaveLoad.getDisc().load();
+
                 cl.setAdventureFrame(denne);
 
                 showLocation();
@@ -298,10 +370,4 @@ public class AdventureFrame extends JFrame implements ActionListener {
         }
 
     }
-
-    public void playerName() {
-        String name = JOptionPane.showInputDialog(maintext, "Please enter player Name", "Player Name", WIDTH);
-        pl.setHeroName(name);
-    }
-
 }
