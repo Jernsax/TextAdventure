@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package textadventure;
 
-import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +13,12 @@ public class TextAdventure {
      */
     public static void main(String[] args) {
 
+        JOptionPane.showMessageDialog(null, "Velkommen til \"Søndag Morgen\"!\n\n"
+                                            + "Din opgave er at få det bedste ud af din morgen, og i sidste ende, ende foran tv'et.\n\n"
+                                            + "I inputboksen skriver du, hvad du gerne vil gøre. Du kan se dine muligheder og hvilke items, der er i rummet, i tekstfeltet.\n\n"
+                                            + "Inventory-feltet viser hvilke items du i øjeblikket har på dig. Actions er hvor mange rum du har bevæget dig igennem.\n\n"
+                                            + "Du kan starte et nyt spil, gemme og hente spil i toolbaren i toppen af billedet.\n\nGod fornøjelse!\n");
+        
         AdventureFrame af = new AdventureFrame();
 
     }
