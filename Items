@@ -1,0 +1,37 @@
+package textadventure;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Jernsax
+ */
+public class Items implements Serializable {
+
+    public ArrayList<Items> inventory = new ArrayList<>();
+    String itemName;
+
+    public Items() {
+
+    }
+
+    public Items(String itemName) {
+        this.itemName = itemName;
+
+    }
+
+    public ArrayList<Items> getInventory() {
+        return inventory;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    @Override
+    public String toString() {
+        return itemName;
+    }
+
+}
